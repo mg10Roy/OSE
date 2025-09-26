@@ -1,82 +1,98 @@
-<html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OSE - Ohtani School Engineering</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="header-content">
-            <a href="#" class="logo">OSE</a>
-            <nav>
-                <div class="hamburger" onclick="toggleMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <ul id="nav-menu">
-                    <li><a href="#about">OSEについて</a></li>
-                    <li><a href="#portfolio">作品集</a></li>
-                    <li><a href="#contact">興味のある方</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>あったらいいなを形に。</h1>
-            <p>プログラミングで未来を創造する</p>
-            <div class="hero-image">
-                <span style="color: rgba(255,255,255,0.7);">OSE ロゴ</span>
+    <!-- Opening Screen -->
+    <div class="opening-screen" id="openingScreen">
+        <div class="opening-content">
+            <div class="opening-image">
+                OSE ロゴ
+            </div>
+            <div class="opening-text">
+                あったらいいなを形に。
             </div>
         </div>
-    </section>
+        <div class="opening-instruction">
+            スクロールしてください
+        </div>
+    </div>
 
     <!-- Main Content -->
-    <main>
-        <section class="about" id="about">
-            <div class="section-content">
-                <h2>プログラミングで世界に彩りを</h2>
-                <div class="card">
-                    <p>Ohtani School Engineering（OSE）は、帯広大谷高校の生徒と組長である橋本一磨が行っているゼミ活動です。プログラミングで日常生活で使えるツールや、ちょっとしたゲームから学園祭のホームページなどを制作しています。</p>
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <header id="header">
+            <div class="header-content">
+                <a href="#" class="logo">OSE</a>
+                <nav>
+                    <div class="hamburger" onclick="toggleMenu()">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <ul id="nav-menu">
+                        <li><a href="#about">OSEについて</a></li>
+                        <li><a href="#portfolio">作品集</a></li>
+                        <li><a href="#contact">興味のある方</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>プログラミングで未来を創造</h1>
+                <p>革新的なアイデアを現実のソリューションに</p>
+                <div class="hero-image">
+                    <span style="color: rgba(108, 117, 125, 0.8);">OSE ビジョン</span>
                 </div>
             </div>
         </section>
 
-        <section class="portfolio" id="portfolio">
-            <div class="section-content">
-                <h2>作品集</h2>
-                <div class="card">
-                    <p>OSEでは様々な作品を公開しています。創造性と技術を融合させた、実用的で革新的なソリューションをご覧ください。</p>
-                    <a href="portfolio.html" class="cta-button">作品を見る</a>
+        <!-- Main Content -->
+        <main>
+            <section class="about" id="about">
+                <div class="section-content">
+                    <h2>プログラミングで世界に彩りを</h2>
+                    <div class="card">
+                        <p>Ohtani School Engineering（OSE）は、帯広大谷高校の生徒と組長である橋本一磨が行っているゼミ活動です。プログラミングで日常生活で使えるツールや、ちょっとしたゲームから学園祭のホームページなどを制作しています。</p>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="contact" id="contact">
-            <div class="section-content">
-                <h2>興味のある方へ</h2>
-                <div class="card">
-                    <p>OSEの活動に興味のある方は、ぜひお気軽にご連絡ください。一緒に技術で世界を変えていきましょう。</p>
-                    <a href="contact.html" class="cta-button">お問い合わせ</a>
+            <section class="portfolio" id="portfolio">
+                <div class="section-content">
+                    <h2>作品集</h2>
+                    <div class="card">
+                        <p>OSEでは様々な作品を公開しています。創造性と技術を融合させた、実用的で革新的なソリューションをご覧ください。</p>
+                        <a href="portfolio.html" class="cta-button">作品を見る</a>
+                    </div>
                 </div>
-            </div>
-        </section>
-    </main>
+            </section>
 
-    <!-- Footer -->
-    <footer>
-        <a href="#" class="back-to-top">トップへ戻る</a>
-        <p>&copy; 2024 Ohtani School Engineering. All rights reserved.</p>
-    </footer>
+            <section class="contact" id="contact">
+                <div class="section-content">
+                    <h2>興味のある方へ</h2>
+                    <div class="card">
+                        <p>OSEの活動に興味のある方は、ぜひお気軽にご連絡ください。一緒に技術で世界を変えていきましょう。</p>
+                        <a href="contact.html" class="cta-button">お問い合わせ</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <a href="#" class="back-to-top">トップへ戻る</a>
+            <p>&copy; 2025 Ohtani School Engineering. All rights reserved.</p>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
-</html>
-  
 </html>
