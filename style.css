@@ -1,10 +1,13 @@
 :root {
     --primary-color: #1d1d1f;
     --secondary-color: #86868b;
-    --accent-color: #007aff;
-    --background-color: #ffffff;
-    --glass-bg: rgba(255, 255, 255, 0.8);
-    --section-bg: #f5f5f7;
+    --accent-color: #ffffff;
+    --background-color: #000000;
+    --glass-bg: rgba(0, 0, 0, 0.8);
+    --section-bg: #0d0d0d;
+    --card-bg: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1a6;
 }
 
 * {
@@ -17,26 +20,194 @@ html {
     scroll-behavior: smooth;
 }
 
+/* 全体のレイアウトを整える */
 body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Hiragino Kaku Gothic Pro', sans-serif;
     line-height: 1.6;
-    color: var(--primary-color);
+    color: var(--text-primary);
     background-color: var(--background-color);
-    overflow-x: hidden;
+}
+
+/* メインコンテンツの幅を制限 */
+.main-content {
+    max-width: 1200px; /* ページの最大幅を設定 */
+    margin: 0 auto; /* 中央揃え */
+    padding: 0 1rem; /* 左右に余白を追加 */
+}
+
+/* セクションの幅を整える */
+section {
+    max-width: 1000px; /* セクションの最大幅を設定 */
+    margin: 0 auto; /* 中央揃え */
+    padding: 5rem 1.5rem; /* 上下と左右に余白を追加 */
+}
+
+/* ヒーローセクションの幅を調整 */
+.hero-content {
+    max-width: 800px; /* ヒーローセクションの最大幅を設定 */
+    margin: 0 auto; /* 中央揃え */
+    text-align: center; /* テキストを中央揃え */
+}
+
+/* Opening Animation Styles */
+.opening-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transition: opacity 1.5s ease-out;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.opening-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+    opacity: 0.3;
+}
+
+.opening-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.opening-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    perspective: 1000px;
+}
+
+.opening-image {
+    width: 400px;
+    height: 300px;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 600;
+    position: absolute;
+    left: 30%;
+    transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    transform: translateX(-50%) translateZ(0);
+}
+
+.opening-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 3rem;
+    font-weight: 200;
+    color: #ffffff;
+    letter-spacing: 0.8rem;
+    position: absolute;
+    right: 20%;
+    transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    line-height: 1.4;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    transform: translateZ(0);
+}
+
+.opening-screen.mouse-moved .opening-image {
+    transform: translateX(-50%) translateZ(200px) scale(2.5);
+    opacity: 0.8;
+    filter: blur(2px);
+}
+
+.opening-screen.mouse-moved .opening-text {
+    transform: translateZ(200px) scale(2.5);
+    opacity: 0.8;
+    filter: blur(2px);
+}
+
+.opening-screen.converged .opening-image,
+.opening-screen.converged .opening-text {
+    opacity: 0;
+    transform: translateZ(500px) scale(4);
+    filter: blur(20px);
+}
+
+.opening-instruction {
+    position: absolute;
+    bottom: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    text-align: center;
+    animation: pulse 3s infinite ease-in-out;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Main Content - Hidden initially */
+.main-content {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease-out;
+    width: clamp(320px, 90%, 1200px); /* 最小320px、推奨90%、最大1200px */
+    margin: 0 auto; /* 中央揃え */
+    padding: 0 1rem; /* 左右に余白を追加 */
+}
+
+.main-content.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Header Styles */
+/* ヘッダーのスタイル */
 header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0)); /* 上が白、下が透明 */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 1000;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    padding: 1rem 2rem; /* ヘッダー内の余白 */
+    height: 80px; /* ヘッダーの高さを明示的に指定 */
+}
+
+/* メインコンテンツのスタイル */
+.main-content {
+    padding-top: 80px; /* ヘッダーの高さ分の余白を追加 */
+}
+
+header.show {
+    top: 0;
 }
 
 .header-content {
@@ -51,8 +222,10 @@ header {
 .logo {
     font-size: 1.5rem;
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--text-primary);
     text-decoration: none;
+    opacity: 0;
+    animation: slideInLeft 1s ease 0.5s forwards;
 }
 
 nav ul {
@@ -61,8 +234,17 @@ nav ul {
     gap: 2rem;
 }
 
+nav li {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+nav li:nth-child(1) { animation: slideInDown 0.6s ease 0.8s forwards; }
+nav li:nth-child(2) { animation: slideInDown 0.6s ease 1s forwards; }
+nav li:nth-child(3) { animation: slideInDown 0.6s ease 1.2s forwards; }
+
 nav a {
-    color: var(--primary-color);
+    color: var(--text-primary);
     text-decoration: none;
     font-weight: 400;
     transition: color 0.2s ease;
@@ -70,7 +252,7 @@ nav a {
 }
 
 nav a:hover {
-    color: var(--accent-color);
+    color: var(--text-secondary);
 }
 
 nav a::after {
@@ -80,7 +262,7 @@ nav a::after {
     left: 0;
     width: 0;
     height: 2px;
-    background: var(--accent-color);
+    background: var(--text-primary);
     transition: width 0.3s ease;
 }
 
@@ -91,13 +273,13 @@ nav a:hover::after {
 /* Hero Section */
 .hero {
     height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: white;
+    color: var(--primary-color);
     position: relative;
     overflow: hidden;
 }
@@ -109,8 +291,8 @@ nav a:hover::after {
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1.5" fill="white" opacity="0.05"/><circle cx="50" cy="10" r="0.8" fill="white" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-    opacity: 0.3;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hero-grid" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="0.8" fill="rgba(0,0,0,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23hero-grid)"/></svg>');
+    opacity: 0.6;
 }
 
 .hero-content {
@@ -118,42 +300,45 @@ nav a:hover::after {
     z-index: 2;
     max-width: 800px;
     padding: 0 2rem;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 1.2s ease 1.5s forwards;
 }
 
 .hero h1 {
     font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 700;
+    font-weight: 300;
     margin-bottom: 1.5rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1s ease 0.5s forwards;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
 }
 
 .hero p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1s ease 0.7s forwards;
+    color: #4a4a4a;
+    line-height: 1.6;
+    font-weight: 400;
 }
 
 .hero-image {
     width: 300px;
     height: 200px;
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
     border-radius: 20px;
     margin: 2rem auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1s ease 0.9s forwards;
+    box-shadow: 
+        0 20px 60px rgba(247, 246, 246, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    color: #6c757d;
+    font-weight: 500;
 }
 
-/* Main Content */
+/* Main Content Sections */
 main {
     padding-top: 0;
 }
@@ -173,17 +358,30 @@ section.visible {
 }
 
 section:nth-child(even) {
-    background-color: var(--section-bg);
+    background: linear-gradient(135deg, #f1f3f4 0%, #e8eaed 100%);
     margin: 0 -2rem;
     padding: 5rem 4rem;
+    position: relative;
+}
+
+section:nth-child(even)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="section-pattern" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="rgba(0,0,0,0.02)"/></pattern></defs><rect width="100" height="100" fill="url(%23section-pattern)"/></svg>');
+    opacity: 0.3;
 }
 
 h2 {
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
+    font-weight: 300;
     text-align: center;
     margin-bottom: 2rem;
-    color: var(--primary-color);
+    color: #c29090;
+    letter-spacing: -0.02em;
 }
 
 .section-content {
@@ -194,68 +392,145 @@ h2 {
 
 p {
     font-size: 1.1rem;
-    color: var(--secondary-color);
+    color: #4a4a4a;
     margin-bottom: 2rem;
     line-height: 1.8;
+    font-weight: 400;
 }
 
 /* Cards */
 .card {
-    background: white;
-    border-radius: 20px;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 24px;
     padding: 3rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.08),
+        0 8px 24px rgba(0, 0, 0, 0.05),
+        0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     margin: 2rem 0;
+    border: 1px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(248, 249, 250, 0.4));
+    border-radius: 24px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transform: translateY(-15px);
+    box-shadow: 
+        0 32px 80px rgba(0, 0, 0, 0.12),
+        0 16px 32px rgba(0, 0, 0, 0.08),
+        0 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card p {
+    color: #4a4a4a;
+    position: relative;
+    z-index: 2;
 }
 
 /* CTA Button */
 .cta-button {
     display: inline-block;
-    background: var(--accent-color);
-    color: white;
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+    color: #ffffff;
     text-decoration: none;
-    padding: 1rem 2rem;
+    padding: 1rem 2.5rem;
     border-radius: 50px;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
     margin-top: 1rem;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.15),
+        0 2px 6px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
 }
 
 .cta-button:hover {
-    background: #005bb5;
+    background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+    box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.2),
+        0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cta-button:hover::before {
+    left: 100%;
 }
 
 /* Footer */
 footer {
-    background: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    color: #ffffff;
     text-align: center;
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     margin-top: 5rem;
+    position: relative;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
 .back-to-top {
     display: inline-block;
-    background: var(--accent-color);
-    color: white;
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    color: #1a1a1a;
     text-decoration: none;
-    padding: 0.8rem 1.5rem;
+    padding: 1rem 2rem;
     border-radius: 50px;
     margin-bottom: 2rem;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    font-weight: 500;
+    box-shadow: 
+        0 8px 24px rgba(255, 255, 255, 0.15),
+        0 2px 6px rgba(255, 255, 255, 0.1);
+    letter-spacing: 0.02em;
 }
 
 .back-to-top:hover {
-    background: #005bb5;
-    transform: translateY(-2px);
+    background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 12px 32px rgba(255, 255, 255, 0.2),
+        0 4px 8px rgba(255, 255, 255, 0.15);
 }
 
 /* Animations */
@@ -266,8 +541,35 @@ footer {
     }
 }
 
+@keyframes slideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
+    .opening-image {
+        width: 250px;
+        height: 200px;
+        font-size: 1rem;
+        left: 25%;
+    }
+
+    .opening-text {
+        font-size: 2rem;
+        right: 15%;
+        letter-spacing: 0.3rem;
+    }
+
     .header-content {
         padding: 1rem;
     }
@@ -306,7 +608,7 @@ footer {
 .hamburger span {
     width: 25px;
     height: 3px;
-    background: var(--primary-color);
+    background: var(--text-primary);
     margin: 3px 0;
     transition: 0.3s;
     border-radius: 2px;
@@ -332,4 +634,15 @@ footer {
     nav ul.active {
         right: 0;
     }
+}/* 初期状態 */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.6s ease-out;
+}
+
+/* スクロールで表示されたとき */
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
